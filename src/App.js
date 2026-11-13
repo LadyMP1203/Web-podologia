@@ -10,6 +10,11 @@ const services = [
 
 const appointmentTimes = ['09:00', '10:00', '11:00', '12:00', '15:00', '16:00', '17:00'];
 
+function getPublicAssetPath(path) {
+  const publicUrl = process.env.PUBLIC_URL || '';
+  return `${publicUrl.replace(/\/$/, '')}/${path}`;
+}
+
 function getLocalDateString(date = new Date()) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -83,7 +88,7 @@ function App() {
     <div className="site-shell">
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label="Podología, volver al inicio">
-          <img className="brand-logo" src="/logohead.png" alt="Logo de Podología Clínica" aria-hidden="true" />
+          <img className="brand-logo" src={getPublicAssetPath('logohead.png')} alt="Logo de Podología Clínica" aria-hidden="true" />
           <span className="brand-name">podología<span>clínica</span></span>
         </a>
         <nav className="main-nav" aria-label="Navegación principal">
@@ -114,7 +119,7 @@ function App() {
           <div className="hero-visual">
             <img
               className="hero-image"
-              src="img_1.jpg"
+              src={getPublicAssetPath('img_1.jpg')}
               alt="fotografia podologa atendiendo a paciente en consulta"
             />
             <div className="image-caption">
@@ -273,7 +278,7 @@ function App() {
 
       <footer className="site-footer">
         <a className="brand footer-brand" href="#inicio">
-          <img className="brand-logo" src="/logohead.png" alt="Logo de Podología Clínica" aria-hidden="true" />
+          <img className="brand-logo" src={getPublicAssetPath('logohead.png')} alt="Logo de Podología Clínica" aria-hidden="true" />
           <span className="brand-name">podología<span>clínica</span></span>
         </a>
         <p>Cuidar tus pies es cuidar tu bienestar.</p>

@@ -35,3 +35,9 @@ El servidor React reenvía `/api` al servidor local en el puerto 5000.
 Construye el frontend con `npm run build` y ejecuta `npm run server` en un entorno con Node.js. El servidor entrega la carpeta `build` y procesa las solicitudes de agenda.
 
 Las fechas anteriores al día actual en la zona horaria de Chile se rechazan tanto en el formulario como en el servidor. Las solicitudes recibidas requieren confirmación manual del equipo; el formulario no bloquea horarios ni confirma automáticamente una cita.
+
+## GitHub Pages
+
+El workflow `.github/workflows/deploy-pages.yml` construye el frontend y lo publica automáticamente al hacer push a `main`. En GitHub, abre **Settings → Pages** y selecciona **GitHub Actions** como fuente de despliegue. La URL del proyecto será `https://ladymp1203.github.io/Web-podologia/`.
+
+GitHub Pages solo aloja archivos estáticos. La página se publicará, pero el formulario de agenda necesita que la API Express se aloje por separado para poder enviar solicitudes.
