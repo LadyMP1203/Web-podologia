@@ -18,6 +18,10 @@ function getLocalDateString(date = new Date()) {
 }
 
 function App() {
+  const [cookieConsent, setCookieConsent] = useState(() => {
+    const savedConsent = window.localStorage.getItem('podologia-cookie-consent');
+    return savedConsent === 'accepted' || savedConsent === 'rejected' ? savedConsent : '';
+  });
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -30,6 +34,11 @@ function App() {
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const today = getLocalDateString();
+
+  function chooseCookieConsent(consent) {
+    window.localStorage.setItem('podologia-cookie-consent', consent);
+    setCookieConsent(consent);
+  }
 
   function updateForm(event) {
     const { name, value } = event.target;
@@ -70,6 +79,7 @@ function App() {
   }
 
   return (
+    <>
     <div className="site-shell">
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label="Podología, volver al inicio">
@@ -263,14 +273,30 @@ function App() {
 
       <footer className="site-footer">
         <a className="brand footer-brand" href="#inicio">
-          <span className="brand-mark" aria-hidden="true">p.</span>
+          <img className="brand-logo" src="/logohead.png" alt="Logo de Podología Clínica" aria-hidden="true" />
           <span className="brand-name">podología<span>clínica</span></span>
         </a>
         <p>Cuidar tus pies es cuidar tu bienestar.</p>
-        <a href="#inicio">Volver arriba ↑</a>
         <small>© {new Date().getFullYear()} Podología Clínica</small>
       </footer>
     </div>
+    {!cookieConsent && (
+      <aside className="cookie-banner" aria-label="Aviso de cookies" role="region">
+        <div className="cookie-copy">
+          <strong>Tu privacidad importa</strong>
+          <p>Actualmente no activamos cookies de analítica ni publicidad. Puedes aceptar o rechazar las cookies opcionales; guardaremos tu elección en este navegador.</p>
+        </div>
+        <div className="cookie-actions">
+          <button type="button" className="cookie-reject" onClick={() => chooseCookieConsent('rejected')}>Rechazar opcionales</button>
+          <button type="button" className="cookie-accept" onClick={() => chooseCookieConsent('accepted')}>Aceptar opcionales</button>
+        </div>
+      </aside>
+    )}
+    <a className="back-to-top" href="#inicio" aria-label="Volver arriba">
+      <span aria-hidden="true">↑</span>
+      <span>Volver arriba</span>
+    </a>
+    </>
   );
 }
 
